@@ -1,11 +1,13 @@
-package pl.sawiak_company.sok.quotation;
+package pl.sawiak_company.sok.hypothesis;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.sawiak_company.sok.code.Code;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
-import pl.sawiak_company.sok.interview.Interview;
+import pl.sawiak_company.sok.project.Project;
+import pl.sawiak_company.sok.question.Question;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,23 +15,22 @@ import pl.sawiak_company.sok.interview.Interview;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cytat")
-public class Quotation {
+@Table(name = "hipoteza")
+public class Hypothesis {
     @Id
     @Column(name = "id")
     @ToString.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "tekst", nullable = false, length = 2500)
+    @Column(name = "tekst", nullable = false)
     private String text;
-    @Column(name = "numer_linijki")
-    private Integer lineNumber;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Code code;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Interview interview;
+    private Project project;
     @Embedded
     private CreationSignature creationSignature;
     @Embedded
     private EditionSignature editionSignature;
+
+    @OneToMany(mappedBy = "hypothesis", fetch = FetchType.LAZY)
+    private List<Question> questions;
 }
