@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableCaching
 @SpringBootApplication
 public class SokApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SokApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(SokApplication.class, args);
+	}
 }
