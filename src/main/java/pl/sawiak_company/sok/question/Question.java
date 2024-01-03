@@ -25,9 +25,11 @@ public class Question {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_hipoteza")
     private Hypothesis hypothesis;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pytanie")
     private Question question;
 
     @ManyToMany
@@ -46,7 +48,7 @@ public class Question {
     @ToString.Exclude
     private List<CodeGroup> codeGroups;
 
-    @Column(name = "tekst", nullable = false)
+    @Column(name = "tekst")
     private String text;
     @Embedded
     private CreationSignature creationSignature;

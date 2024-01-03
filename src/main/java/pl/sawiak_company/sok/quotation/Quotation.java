@@ -20,13 +20,15 @@ public class Quotation {
     @ToString.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "tekst", nullable = false, length = 2500)
+    @Column(name = "tekst", length = 2500)
     private String text;
     @Column(name = "numer_linijki")
     private Integer lineNumber;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_kod")
     private Code code;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_wywiad")
     private Interview interview;
     @Embedded
     private CreationSignature creationSignature;

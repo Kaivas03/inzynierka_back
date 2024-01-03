@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
-import pl.sawiak_company.sok.project.Project;
+import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 import pl.sawiak_company.sok.question.Question;
 
 import java.util.List;
@@ -25,7 +25,8 @@ public class Hypothesis {
     @Column(name = "tekst", nullable = false)
     private String text;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
+    @JoinColumn(name = "id_badanie")
+    private SociologicalProject sociologicalProject;
     @Embedded
     private CreationSignature creationSignature;
     @Embedded

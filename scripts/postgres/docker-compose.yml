@@ -5,7 +5,7 @@ services:
     image: postgres:13.2
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5444:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     #    command: postgres -c shared_preload_libraries=pg_stat_statements
