@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
+import pl.sawiak_company.sok.interview.Interview;
+import pl.sawiak_company.sok.interview.InterviewService;
 import pl.sawiak_company.sok.quotation.dto.QuotationRequest;
 
 import java.util.List;
@@ -14,12 +16,16 @@ import java.util.List;
 public class QuotationService {
     @Autowired
     private QuotationRepository quotationRepository;
+    @Autowired
+    private InterviewService interviewService;
 
     public Quotation createQuotation(Integer interviewId, QuotationRequest request) {
+        Interview interview = interviewService.getById(interviewId);
+
         Quotation quotation = Quotation.builder()
                 .text(request.getText())
                 .lineNumber(request.getLineNumber())
-//                .interview()
+                .interview(interview)
 //                .code()
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())

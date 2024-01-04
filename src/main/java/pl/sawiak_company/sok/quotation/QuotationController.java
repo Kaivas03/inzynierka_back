@@ -20,7 +20,7 @@ public class QuotationController {
     public ResponseEntity<Quotation> create(@PathVariable(name = "interviewId") Integer interviewId,
                                             @RequestBody QuotationRequest request) {
         Quotation quotation = quotationService.createQuotation(interviewId, request);
-        log.info("Created new Project {}", quotation);
+        log.info("Created new Quotation {}", quotation);
         return new ResponseEntity<>(quotation, HttpStatus.OK);
     }
 
@@ -28,7 +28,14 @@ public class QuotationController {
     public ResponseEntity<Quotation> edit(@PathVariable(name = "id") Integer id,
                                           @RequestBody QuotationRequest request) {
         Quotation quotation = quotationService.editQuotation(id, request);
-        log.info("Updated Project {}", id);
+        log.info("Updated Quotation {}", id);
+        return new ResponseEntity<>(quotation, HttpStatus.OK);
+    }
+
+    @PostMapping("/add-code")
+    public ResponseEntity<Quotation> addCode(@RequestParam Integer quotationId, Integer codeId) {
+        Quotation quotation = quotationService.addCode(quotationId, codeId);
+        log.info("Updated Quotation {}", quotationId);
         return new ResponseEntity<>(quotation, HttpStatus.OK);
     }
 
@@ -47,7 +54,7 @@ public class QuotationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Integer id) {
         quotationService.deleteQuotation(id);
-        log.info("Deleted Project {}", id);
+        log.info("Deleted Quotation {}", id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
