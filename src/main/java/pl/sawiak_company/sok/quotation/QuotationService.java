@@ -3,6 +3,8 @@ package pl.sawiak_company.sok.quotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import pl.sawiak_company.sok.code.Code;
+import pl.sawiak_company.sok.code.CodeService;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
@@ -18,6 +20,8 @@ public class QuotationService {
     private QuotationRepository quotationRepository;
     @Autowired
     private InterviewService interviewService;
+    @Autowired
+    private CodeService codeService;
 
     public Quotation createQuotation(Integer interviewId, QuotationRequest request) {
         Interview interview = interviewService.getById(interviewId);
@@ -26,10 +30,14 @@ public class QuotationService {
                 .text(request.getText())
                 .lineNumber(request.getLineNumber())
                 .interview(interview)
-//                .code()
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
+
+        if (request.getCodeId() != null) {
+            Code code = codeService.getById(request.getCodeId());
+            quotation.setCode(code);
+        }
 
         quotationRepository.save(quotation);
         return quotation;
@@ -47,9 +55,13 @@ public class QuotationService {
     public Quotation editQuotation(Integer quotationId, QuotationRequest request) {
         Quotation quotation = getById(quotationId);
 
+        if (request.getCodeId() != null) {
+            Code code = codeService.getById(request.getCodeId());
+            quotation.setCode(code);
+        }
+
         quotation.setText(request.getText());
         quotation.setLineNumber(request.getLineNumber());
-//        quotation.setCode();
         quotation.setEditionSignature(new EditionSignature());
         quotationRepository.save(quotation);
         return quotation;
@@ -58,7 +70,11 @@ public class QuotationService {
     public Quotation addCode(Integer quotationId, Integer codeId) {
         Quotation quotation = getById(quotationId);
 
-//        quotation.setCode();
+        if (codeId != null) {
+            Code code = codeService.getById(codeId);
+            quotation.setCode(code);
+        }
+
         quotation.setEditionSignature(new EditionSignature());
         quotationRepository.save(quotation);
         return quotation;

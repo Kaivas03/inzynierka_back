@@ -7,6 +7,8 @@ import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.interview.dto.InterviewRequest;
+import pl.sawiak_company.sok.sociological_project.SociologicalProject;
+import pl.sawiak_company.sok.sociological_project.SociologicalProjectService;
 
 import java.util.List;
 
@@ -14,11 +16,16 @@ import java.util.List;
 public class InterviewService {
     @Autowired
     private InterviewRepository interviewRepository;
+    @Autowired
+    private SociologicalProjectService projectService;
 
-    public Interview createInterview(InterviewRequest request) {
+    public Interview createInterview(Integer projectId, InterviewRequest request) {
+        SociologicalProject project = projectService.getById(projectId);
+
         Interview interview = Interview.builder()
                 .name(request.getName())
                 .text(request.getText())
+                .sociologicalProject(project)
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
@@ -29,7 +36,7 @@ public class InterviewService {
 
     public Interview getById(Integer id) {
         return interviewRepository.findById(id)
-                .orElseThrow(() -> new RequestException("No PROJECT within given Id: " + id, HttpStatus.BAD_REQUEST, "PROJECT_NOT_EXISTS"));
+                .orElseThrow(() -> new RequestException("No INTERVIEW within given Id: " + id, HttpStatus.BAD_REQUEST, "INTERVIEW_NOT_EXISTS"));
     }
 
     public List<Interview> getAll() {

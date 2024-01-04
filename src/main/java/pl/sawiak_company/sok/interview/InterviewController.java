@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sawiak_company.sok.code_group.CodeGroup;
+import pl.sawiak_company.sok.code_group.dto.CodeGroupRequest;
 import pl.sawiak_company.sok.interview.dto.InterviewRequest;
 
 import java.util.List;
@@ -16,9 +18,10 @@ public class InterviewController {
     @Autowired
     private InterviewService interviewService;
 
-    @PostMapping("/")
-    public ResponseEntity<Interview> create(@RequestBody InterviewRequest request) {
-        Interview interview = interviewService.createInterview(request);
+    @PostMapping("/{projectId}")
+    public ResponseEntity<Interview> create(@PathVariable(name = "projectId") Integer projectId,
+                                            @RequestBody InterviewRequest request) {
+        Interview interview = interviewService.createInterview(projectId, request);
         log.info("Created new Interview {}", interview);
         return new ResponseEntity<>(interview, HttpStatus.OK);
     }
