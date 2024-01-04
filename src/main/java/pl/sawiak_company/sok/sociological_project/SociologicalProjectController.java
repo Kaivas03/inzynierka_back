@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sawiak_company.sok.sociological_project.dto.SocProjectRequest;
 
 import java.util.List;
 
@@ -16,15 +17,16 @@ public class SociologicalProjectController {
     private SociologicalProjectService projectService;
 
     @PostMapping("/")
-    public ResponseEntity<SociologicalProject> create(@RequestBody String name) {
-        SociologicalProject project = projectService.createProject(name);
+    public ResponseEntity<SociologicalProject> create(@RequestBody SocProjectRequest request) {
+        SociologicalProject project = projectService.createProject(request);
         log.info("Created new Project {}", project);
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<SociologicalProject> edit(@PathVariable(name = "id") Integer id, @RequestBody String name) {
-        SociologicalProject project = projectService.editProject(id, name);
+    public ResponseEntity<SociologicalProject> edit(@PathVariable(name = "id") Integer id,
+                                                    @RequestBody SocProjectRequest request) {
+        SociologicalProject project = projectService.editProject(id, request);
         log.info("Updated Project {}", id);
         return new ResponseEntity<>(project, HttpStatus.OK);
     }

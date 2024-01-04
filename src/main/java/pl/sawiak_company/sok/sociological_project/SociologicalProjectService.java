@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
+import pl.sawiak_company.sok.sociological_project.dto.SocProjectRequest;
 
 import java.util.List;
 
@@ -14,10 +15,9 @@ public class SociologicalProjectService {
     @Autowired
     private SociologicalProjectRepository projectRepository;
 
-    public SociologicalProject createProject(String name) {
-
+    public SociologicalProject createProject(SocProjectRequest request) {
         SociologicalProject project = SociologicalProject.builder()
-                .name(name)
+                .name(request.getName())
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
@@ -35,10 +35,10 @@ public class SociologicalProjectService {
         return projectRepository.findAll();
     }
 
-    public SociologicalProject editProject(Integer id, String name) {
+    public SociologicalProject editProject(Integer id, SocProjectRequest request) {
         SociologicalProject project = getById(id);
 
-        project.setName(name);
+        project.setName(request.getName());
         project.setEditionSignature(new EditionSignature());
         projectRepository.save(project);
         return project;
