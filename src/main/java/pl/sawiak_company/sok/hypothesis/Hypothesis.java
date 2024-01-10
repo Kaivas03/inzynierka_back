@@ -7,6 +7,7 @@ import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 import pl.sawiak_company.sok.question.Question;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,10 @@ public class Hypothesis {
     @ToString.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "pozycja_x")
+    private BigDecimal posX;
+    @Column(name = "pozycja_y")
+    private BigDecimal posY;
     @Column(name = "tekst", nullable = false)
     private String text;
     @ManyToOne(fetch = FetchType.LAZY)

@@ -8,6 +8,7 @@ import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.hypothesis.Hypothesis;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -48,6 +49,10 @@ public class Question {
     @ToString.Exclude
     private List<CodeGroup> codeGroups;
 
+    @Column(name = "pozycja_x")
+    private BigDecimal posX;
+    @Column(name = "pozycja_y")
+    private BigDecimal posY;
     @Column(name = "tekst")
     private String text;
     @Embedded
