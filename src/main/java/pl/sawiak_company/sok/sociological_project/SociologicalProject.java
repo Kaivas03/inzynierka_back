@@ -22,6 +22,8 @@ public class SociologicalProject {
     private Integer id;
     @Column(name = "nazwa", nullable = false)
     private String name;
+    @Column(name = "opis")
+    private String description;
     @Embedded
     private CreationSignature creationSignature;
     @Embedded

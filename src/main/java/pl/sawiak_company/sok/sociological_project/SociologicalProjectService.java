@@ -18,6 +18,7 @@ public class SociologicalProjectService {
     public SociologicalProject createProject(SocProjectRequest request) {
         SociologicalProject project = SociologicalProject.builder()
                 .name(request.getName())
+                .description(request.getDescription())
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
@@ -39,6 +40,7 @@ public class SociologicalProjectService {
         SociologicalProject project = getById(id);
 
         project.setName(request.getName());
+        project.setDescription(request.getDescription());
         project.setEditionSignature(new EditionSignature());
         projectRepository.save(project);
         return project;
