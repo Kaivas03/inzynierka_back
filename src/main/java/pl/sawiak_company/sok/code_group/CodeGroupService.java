@@ -38,8 +38,13 @@ public class CodeGroupService {
                 .orElseThrow(() -> new RequestException("No CODE_GROUP within given Id: " + id, HttpStatus.BAD_REQUEST, "CODE_GROUP_NOT_EXISTS"));
     }
 
-    public List<CodeGroup> getAll() {
-        return codeGroupRepository.findAll();
+    public List<CodeGroup> getAllByProject(Integer projectId) {
+        SociologicalProject project = projectService.getById(projectId);
+        return codeGroupRepository.findAllBySociologicalProject(project);
+    }
+
+    public List<CodeGroup> getAllByProject(SociologicalProject project) {
+        return codeGroupRepository.findAllBySociologicalProject(project);
     }
 
     public CodeGroup editCodeGroup(Integer id, CodeGroupRequest request) {
@@ -53,6 +58,10 @@ public class CodeGroupService {
 
     public void deleteCodeGroup(Integer id) {
         CodeGroup codeGroup = getById(id);
+        deleteCodeGroup(codeGroup);
+    }
+
+    public void deleteCodeGroup(CodeGroup codeGroup) {
         codeGroupRepository.delete(codeGroup);
     }
 }

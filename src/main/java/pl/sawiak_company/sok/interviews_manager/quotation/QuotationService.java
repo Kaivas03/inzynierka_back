@@ -48,8 +48,13 @@ public class QuotationService {
                 .orElseThrow(() -> new RequestException("No QUOTATION within given Id: " + id, HttpStatus.BAD_REQUEST, "QUOTATION_NOT_EXISTS"));
     }
 
-    public List<Quotation> getAll() {
-        return quotationRepository.findAll();
+    public List<Quotation> getAllByInterview(Integer interviewId) {
+        Interview interview = interviewService.getById(interviewId);
+        return quotationRepository.findAllByInterview(interview);
+    }
+
+    public List<Quotation> getAllByInterview(Interview interview) {
+        return quotationRepository.findAllByInterview(interview);
     }
 
     public Quotation editQuotation(Integer quotationId, QuotationRequest request) {
@@ -82,6 +87,10 @@ public class QuotationService {
 
     public void deleteQuotation(Integer id) {
         Quotation quotation = getById(id);
+        deleteQuotation(quotation);
+    }
+
+    public void deleteQuotation(Quotation quotation) {
         quotationRepository.delete(quotation);
     }
 }

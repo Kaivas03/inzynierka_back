@@ -3,10 +3,13 @@ package pl.sawiak_company.sok.interviews_manager.interview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.interviews_manager.interview.dto.InterviewRequest;
+import pl.sawiak_company.sok.interviews_manager.quotation.Quotation;
+import pl.sawiak_company.sok.interviews_manager.quotation.QuotationService;
 import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 import pl.sawiak_company.sok.sociological_project.SociologicalProjectService;
 
@@ -18,6 +21,8 @@ public class InterviewService {
     private InterviewRepository interviewRepository;
     @Autowired
     private SociologicalProjectService projectService;
+    @Autowired
+    private QuotationService quotationService;
 
     public Interview createInterview(Integer projectId, InterviewRequest request) {
         SociologicalProject project = projectService.getById(projectId);
@@ -41,6 +46,10 @@ public class InterviewService {
 
     public List<Interview> getAllByProject(Integer projectId) {
         SociologicalProject project = projectService.getById(projectId);
+        return getAllByProject(project);
+    }
+
+    public List<Interview> getAllByProject(SociologicalProject project) {
         return interviewRepository.findAllBySociologicalProject(project);
     }
 
@@ -56,6 +65,14 @@ public class InterviewService {
 
     public void deleteInterview(Integer id) {
         Interview interview = getById(id);
+        deleteInterview(interview);
+    }
+
+    @Transactional
+    public void deleteInterview(Interview interview) {
+        List<Quotation> quotations = quotationService.getAllByInterview(interview);
+        quotations.forEach(quotation -> quotationService.deleteQuotation(quotation));
+
         interviewRepository.delete(interview);
     }
 }

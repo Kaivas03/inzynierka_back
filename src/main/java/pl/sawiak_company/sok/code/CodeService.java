@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pl.sawiak_company.sok.code.dto.CodeRequest;
+import pl.sawiak_company.sok.code_group.CodeGroup;
+import pl.sawiak_company.sok.code_group.CodeGroupService;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
@@ -18,6 +20,8 @@ public class CodeService {
     private CodeRepository codeRepository;
     @Autowired
     private SociologicalProjectService projectService;
+    @Autowired
+    private CodeGroupService codeGroupService;
 
     public Code createCode(Integer projectId, CodeRequest request) {
         SociologicalProject project = projectService.getById(projectId);
@@ -25,7 +29,6 @@ public class CodeService {
         Code code = Code.builder()
                 .sociologicalProject(project)
                 .name(request.getName())
-//                .codeGroup()
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
@@ -39,15 +42,19 @@ public class CodeService {
                 .orElseThrow(() -> new RequestException("No CODE within given Id: " + id, HttpStatus.BAD_REQUEST, "CODE_NOT_EXISTS"));
     }
 
-    public List<Code> getAll() {
-        return codeRepository.findAll();
+    public List<Code> getAllByProject(Integer projectId) {
+        SociologicalProject project = projectService.getById(projectId);
+        return getAllByProject(project);
+    }
+
+    public List<Code> getAllByProject(SociologicalProject project) {
+        return codeRepository.findAllBySociologicalProject(project);
     }
 
     public Code editCode(Integer codeId, CodeRequest request) {
         Code code = getById(codeId);
 
         code.setName(request.getName());
-//        code.setCodeGroup();
         code.setEditionSignature(new EditionSignature());
         codeRepository.save(code);
         return code;
@@ -55,8 +62,9 @@ public class CodeService {
 
     public Code addCodeGroup(Integer codeId, Integer codeGroupId) {
         Code code = getById(codeId);
+        CodeGroup codeGroup = codeGroupService.getById(codeGroupId);
 
-//        code.setCodeGroup();
+        code.setCodeGroup(codeGroup);
         code.setEditionSignature(new EditionSignature());
         codeRepository.save(code);
         return code;
@@ -64,6 +72,10 @@ public class CodeService {
 
     public void deleteCode(Integer id) {
         Code code = getById(id);
+        deleteCode(code);
+    }
+
+    public void deleteCode(Code code) {
         codeRepository.delete(code);
     }
 }

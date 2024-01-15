@@ -3,6 +3,7 @@ package pl.sawiak_company.sok.project_mind_map.hypothesis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
@@ -49,6 +50,10 @@ public class HypothesisService {
 
     public List<Hypothesis> getAllByProject(Integer projectId) {
         SociologicalProject project = projectService.getById(projectId);
+        return getAllByProject(project);
+    }
+
+    public List<Hypothesis> getAllByProject(SociologicalProject project) {
         return hypothesisRepository.findAllBySociologicalProject(project);
     }
 
@@ -63,6 +68,14 @@ public class HypothesisService {
 
     public void deleteHypothesis(Integer id) {
         Hypothesis hypothesis = getById(id);
+        deleteHypothesis(hypothesis);
+    }
+
+    @Transactional
+    public void deleteHypothesis(Hypothesis hypothesis) {
+        List<Question> questions = questionService.getAllByHypothesis(hypothesis);
+        questions.forEach(question -> questionService.deleteQuestion(question));
+
         hypothesisRepository.delete(hypothesis);
     }
 }

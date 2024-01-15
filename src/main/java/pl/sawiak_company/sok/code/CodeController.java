@@ -45,9 +45,9 @@ public class CodeController {
         return new ResponseEntity<>(code, HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<Code>> getAll() {
-        List<Code> codes = codeService.getAll();
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<Code>> getAllByProject(@PathVariable(name = "projectId") Integer projectId) {
+        List<Code> codes = codeService.getAllByProject(projectId);
         return new ResponseEntity<>(codes, HttpStatus.OK);
     }
 

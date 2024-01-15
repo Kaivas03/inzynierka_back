@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sawiak_company.sok.code.Code;
-import pl.sawiak_company.sok.code.dto.CodeRequest;
 import pl.sawiak_company.sok.code_group.dto.CodeGroupRequest;
 
 import java.util.List;
@@ -40,9 +38,9 @@ public class CodeGroupController {
         return new ResponseEntity<>(codeGroup, HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<CodeGroup>> getAll() {
-        List<CodeGroup> codeGroups = codeGroupService.getAll();
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<CodeGroup>> getAllByProject(@PathVariable(name = "projectId") Integer projectId) {
+        List<CodeGroup> codeGroups = codeGroupService.getAllByProject(projectId);
         return new ResponseEntity<>(codeGroups, HttpStatus.OK);
     }
 

@@ -45,9 +45,9 @@ public class QuotationController {
         return new ResponseEntity<>(quotation, HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<Quotation>> getAll() {
-        List<Quotation> quotations = quotationService.getAll();
+    @GetMapping("/interview/{interviewId}")
+    public ResponseEntity<List<Quotation>> getAllByInterview(@PathVariable(name = "interviewId") Integer interviewId) {
+        List<Quotation> quotations = quotationService.getAllByInterview(interviewId);
         return new ResponseEntity<>(quotations, HttpStatus.OK);
     }
 

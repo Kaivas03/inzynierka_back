@@ -58,6 +58,10 @@ public class QuestionService {
 
     public List<Question> getAllByHypothesis(Integer hypothesisId) {
         Hypothesis hypothesis = hypothesisService.getById(hypothesisId);
+        return getAllByHypothesis(hypothesis);
+    }
+
+    public List<Question> getAllByHypothesis(Hypothesis hypothesis) {
         return questionRepository.findAllByHypothesis(hypothesis);
     }
 
@@ -83,6 +87,17 @@ public class QuestionService {
 
     public void deleteQuestion(Integer id) {
         Question question = getById(id);
-        questionRepository.delete(question);
+        deleteQuestion(question);
+    }
+
+    public void deleteQuestion(Question question) {
+        if (question.getQuestion() == null) {
+            hypothesisService.deleteHypothesis(question.getHypothesis());
+        } else {
+            List<Question> questions = question.getQuestions();
+            questions.forEach(question1 -> deleteQuestion(question));
+
+            questionRepository.delete(question);
+        }
     }
 }
