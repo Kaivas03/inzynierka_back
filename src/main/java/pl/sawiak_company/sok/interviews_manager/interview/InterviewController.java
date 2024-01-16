@@ -38,7 +38,7 @@ public class InterviewController {
         return new ResponseEntity<>(interview, HttpStatus.OK);
     }
 
-    @GetMapping("/{projectId}")
+    @GetMapping("/project/{projectId}")
     public ResponseEntity<List<Interview>> getAllForProject(@PathVariable(name = "projectId") Integer projectId) {
         List<Interview> interviews = interviewService.getAllByProject(projectId);
         return new ResponseEntity<>(interviews, HttpStatus.OK);

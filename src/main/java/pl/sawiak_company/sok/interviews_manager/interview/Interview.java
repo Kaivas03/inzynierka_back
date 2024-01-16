@@ -22,7 +22,7 @@ public class Interview {
     @ToString.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "tekst", length = 2500)
+    @Column(name = "tekst", length = 25000)
     private String text;
     @Column(name = "nazwa")
     private String name;
