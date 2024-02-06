@@ -1,8 +1,11 @@
 package pl.sawiak_company.sok.code_group;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.sawiak_company.sok.code.Code;
+import pl.sawiak_company.sok.code_group.dto.CodeGroupDto;
+import pl.sawiak_company.sok.code_group.dto.CodeGroupSerializer;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.sociological_project.SociologicalProject;
@@ -16,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "grupa_kodow")
+@JsonSerialize(using = CodeGroupSerializer.class)
 public class CodeGroup {
     @Id
     @Column(name = "id")

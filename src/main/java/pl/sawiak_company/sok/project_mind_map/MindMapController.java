@@ -29,7 +29,7 @@ public class MindMapController {
     public ResponseEntity<Void> setNodes(@PathVariable(name = "hypothesisId") Integer hypothesisId,
                                          @RequestBody UpdatePositionDto request) {
         mindMapService.setNodes(request.getNodes());
-        log.info("Zaktualizowano pozycję dla pytania hipotezy o id: " + hypothesisId);
+        log.info("Zaktualizowano pozycję dla pytań hipotezy o id: " + hypothesisId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

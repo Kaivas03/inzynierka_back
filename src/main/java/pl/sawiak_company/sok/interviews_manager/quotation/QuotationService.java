@@ -12,6 +12,7 @@ import pl.sawiak_company.sok.interviews_manager.interview.Interview;
 import pl.sawiak_company.sok.interviews_manager.interview.InterviewService;
 import pl.sawiak_company.sok.interviews_manager.quotation.dto.QuotationRequest;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -50,11 +51,13 @@ public class QuotationService {
 
     public List<Quotation> getAllByInterview(Integer interviewId) {
         Interview interview = interviewService.getById(interviewId);
-        return quotationRepository.findAllByInterview(interview);
+        return getAllByInterview(interview);
     }
 
     public List<Quotation> getAllByInterview(Interview interview) {
-        return quotationRepository.findAllByInterview(interview);
+        List<Quotation> quotationList = quotationRepository.findAllByInterview(interview);
+        quotationList.sort(Comparator.comparingInt(Quotation::getLineNumber));
+        return quotationList;
     }
 
     public Quotation editQuotation(Integer quotationId, QuotationRequest request) {

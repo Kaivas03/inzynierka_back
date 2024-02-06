@@ -31,3 +31,4 @@ build/
 /logs/
 ### JPA Buddy
 .jpb
+out/

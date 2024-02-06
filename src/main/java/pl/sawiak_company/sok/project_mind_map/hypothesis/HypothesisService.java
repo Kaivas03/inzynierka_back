@@ -73,9 +73,12 @@ public class HypothesisService {
 
     @Transactional
     public void deleteHypothesis(Hypothesis hypothesis) {
-        List<Question> questions = questionService.getAllByHypothesis(hypothesis);
-        questions.forEach(question -> questionService.deleteQuestion(question));
+        questionService.deleteQuestion(hypothesis.getQuestion());
+    }
 
-        hypothesisRepository.delete(hypothesis);
+    public void deleteOnlyHypothesis(Hypothesis hypothesis) {
+        hypothesis.setQuestion(null);
+        Hypothesis nullQuestionHypothesis = hypothesisRepository.save(hypothesis);
+        hypothesisRepository.delete(nullQuestionHypothesis);
     }
 }

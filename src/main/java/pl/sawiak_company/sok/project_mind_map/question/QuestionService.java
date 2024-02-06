@@ -91,13 +91,12 @@ public class QuestionService {
     }
 
     public void deleteQuestion(Question question) {
-        if (question.getQuestion() == null) {
-            hypothesisService.deleteHypothesis(question.getHypothesis());
-        } else {
-            List<Question> questions = question.getQuestions();
-            questions.forEach(question1 -> deleteQuestion(question));
+        List<Question> questions = question.getQuestions();
+        questions.forEach(this::deleteQuestion);
 
-            questionRepository.delete(question);
+        if (question.getQuestion() == null) {
+            hypothesisService.deleteOnlyHypothesis(question.getHypothesis());
         }
+        questionRepository.delete(question);
     }
 }
