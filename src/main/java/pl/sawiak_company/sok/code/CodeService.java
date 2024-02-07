@@ -51,6 +51,10 @@ public class CodeService {
         return codeRepository.findAllBySociologicalProject(project);
     }
 
+    public List<Code> getCodesByIds(List<Integer> codeIds) {
+        return codeRepository.findAllByIdIn(codeIds);
+    }
+
     public Code editCode(Integer codeId, CodeRequest request) {
         Code code = getById(codeId);
 

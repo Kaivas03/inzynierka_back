@@ -12,4 +12,6 @@ public interface CodeRepository extends JpaRepository<Code, Integer> {
     Optional<Code> findById(Integer id);
 
     List<Code> findAllBySociologicalProject(SociologicalProject sociologicalProject);
+
+    List<Code> findAllByIdIn(List<Integer> codeIds);
 }

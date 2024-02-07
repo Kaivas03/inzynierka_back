@@ -15,8 +15,6 @@ public class InterviewDto {
     private String name;
     private String text;
     private Integer quotationAmount;
-    private Integer codeAmount;
-    private Integer codeGroupAmount;
     private CreationSignature creationSignature;
     private EditionSignature editionSignature;
 

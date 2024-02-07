@@ -15,6 +15,7 @@ import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 import pl.sawiak_company.sok.sociological_project.SociologicalProjectService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,7 +37,7 @@ public class HypothesisService {
                 .build();
         hypothesisRepository.save(hypothesis);
 
-        Question question = questionService.createHypothesisQuestion(hypothesis, new QuestionRequest(hypothesis.getText(), BigDecimal.ZERO, BigDecimal.ZERO));
+        Question question = questionService.createHypothesisQuestion(hypothesis);
         hypothesis.setQuestion(question);
         hypothesisRepository.save(hypothesis);
 
@@ -74,9 +75,6 @@ public class HypothesisService {
     @Transactional
     public void deleteHypothesis(Hypothesis hypothesis) {
         questionService.deleteQuestion(hypothesis.getQuestion());
-    }
-
-    public void deleteOnlyHypothesis(Hypothesis hypothesis) {
         hypothesis.setQuestion(null);
         Hypothesis nullQuestionHypothesis = hypothesisRepository.save(hypothesis);
         hypothesisRepository.delete(nullQuestionHypothesis);

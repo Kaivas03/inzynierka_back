@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.sawiak_company.sok.code.Code;
-import pl.sawiak_company.sok.code_group.dto.CodeGroupDto;
 import pl.sawiak_company.sok.code_group.dto.CodeGroupSerializer;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;

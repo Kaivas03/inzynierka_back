@@ -12,4 +12,6 @@ public interface CodeGroupRepository extends JpaRepository<CodeGroup, Integer> {
     Optional<CodeGroup> findById(Integer id);
 
     List<CodeGroup> findAllBySociologicalProject(SociologicalProject sociologicalProject);
+
+    List<CodeGroup> findAllByIdIn(List<Integer> codeGroupIds);
 }

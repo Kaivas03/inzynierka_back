@@ -47,6 +47,10 @@ public class CodeGroupService {
         return codeGroupRepository.findAllBySociologicalProject(project);
     }
 
+    public List<CodeGroup> getAllByIds(List<Integer> codeGroupIds) {
+        return codeGroupRepository.findAllByIdIn(codeGroupIds);
+    }
+
     public CodeGroup editCodeGroup(Integer id, CodeGroupRequest request) {
         CodeGroup codeGroup = getById(id);
 

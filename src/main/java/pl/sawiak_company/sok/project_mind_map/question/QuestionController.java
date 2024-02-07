@@ -46,7 +46,7 @@ public class QuestionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Integer id) {
-        questionService.deleteQuestion(id);
+        questionService.deleteQuestionOrHypothesis(id);
         log.info("Deleted Question {}", id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

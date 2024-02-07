@@ -1,5 +1,6 @@
 package pl.sawiak_company.sok.project_mind_map.question;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.sawiak_company.sok.code.Code;
@@ -7,6 +8,7 @@ import pl.sawiak_company.sok.code_group.CodeGroup;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.project_mind_map.hypothesis.Hypothesis;
+import pl.sawiak_company.sok.project_mind_map.question.dto.QuestionSerializer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "pytanie")
+@JsonSerialize(using = QuestionSerializer.class)
 public class Question {
     @Id
     @Column(name = "id")

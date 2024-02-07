@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,4 +14,6 @@ public class QuestionRequest {
     private String text;
     private BigDecimal posX;
     private BigDecimal posY;
+    private List<Integer> codeIds;
+    private List<Integer> codeGroupIds;
 }
