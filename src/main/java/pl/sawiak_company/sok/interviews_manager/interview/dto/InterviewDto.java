@@ -22,7 +22,7 @@ public class InterviewDto {
         this.id = interview.getId();
         this.name = interview.getName();
         this.text = interview.getText();
-        this.quotationAmount = interview.getQuotations().size();
+        this.quotationAmount = interview.getQuotations() == null ? 0 : interview.getQuotations().size();
         this.creationSignature = interview.getCreationSignature();
         this.editionSignature = interview.getEditionSignature();
     }

@@ -9,6 +9,7 @@ import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
 import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,6 +20,7 @@ public class CodeGroupDto {
     private String name;
     private Integer projectId;
     private Integer codeAmount;
+    private List<Code> codes = new ArrayList<>();
     private CreationSignature creationSignature;
     private EditionSignature editionSignature;
 
@@ -26,7 +28,8 @@ public class CodeGroupDto {
         this.id = codeGroup.getId();
         this.name = codeGroup.getName();
         this.projectId = codeGroup.getSociologicalProject().getId();
-        this.codeAmount = codeGroup.getCodes().size();
+        this.codeAmount = codeGroup.getCodes() == null ? 0 : codeGroup.getCodes().size();
+        this.codes = codeGroup.getCodes();
         this.creationSignature = codeGroup.getCreationSignature();
         this.editionSignature = codeGroup.getEditionSignature();
     }

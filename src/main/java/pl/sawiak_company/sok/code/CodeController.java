@@ -32,8 +32,8 @@ public class CodeController {
         return new ResponseEntity<>(quotation, HttpStatus.OK);
     }
 
-    @PostMapping("/add-code")
-    public ResponseEntity<Code> addCode(@RequestParam Integer codeId, Integer codeGroupId) {
+    @PostMapping("/add-code-group")
+    public ResponseEntity<Code> addCodeGroup(@RequestParam Integer codeId, Integer codeGroupId) {
         Code code = codeService.addCodeGroup(codeId, codeGroupId);
         log.info("Updated Code {}", codeId);
         return new ResponseEntity<>(code, HttpStatus.OK);

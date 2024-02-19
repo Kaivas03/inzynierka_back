@@ -66,6 +66,8 @@ public class QuotationService {
         if (request.getCodeId() != null) {
             Code code = codeService.getById(request.getCodeId());
             quotation.setCode(code);
+        } else {
+            quotation.setCode(null);
         }
 
         quotation.setText(request.getText());

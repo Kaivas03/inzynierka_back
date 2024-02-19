@@ -3,6 +3,8 @@ package pl.sawiak_company.sok.code_group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import pl.sawiak_company.sok.code.Code;
+import pl.sawiak_company.sok.code.CodeService;
 import pl.sawiak_company.sok.code_group.dto.CodeGroupRequest;
 import pl.sawiak_company.sok.common.exceptions.RequestException;
 import pl.sawiak_company.sok.common.signature.creation.CreationSignature;
@@ -10,6 +12,7 @@ import pl.sawiak_company.sok.common.signature.edition.EditionSignature;
 import pl.sawiak_company.sok.sociological_project.SociologicalProject;
 import pl.sawiak_company.sok.sociological_project.SociologicalProjectService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,16 +21,22 @@ public class CodeGroupService {
     private CodeGroupRepository codeGroupRepository;
     @Autowired
     private SociologicalProjectService projectService;
+//    @Autowired
+//    private CodeService codeService;
 
     public CodeGroup createCodeGroup(Integer projectId, CodeGroupRequest request) {
         SociologicalProject project = projectService.getById(projectId);
+//        List<Code> codes = codeService.getCodesByIds(request.getCodeIds());
 
         CodeGroup codeGroup = CodeGroup.builder()
                 .name(request.getName())
                 .sociologicalProject(project)
+//                .codes(codes)
                 .creationSignature(new CreationSignature())
                 .editionSignature(new EditionSignature())
                 .build();
+
+//        codes.forEach(code -> codeService.addCodeGroup(code, codeGroup));
 
         codeGroupRepository.save(codeGroup);
         return codeGroup;
@@ -54,7 +63,14 @@ public class CodeGroupService {
     public CodeGroup editCodeGroup(Integer id, CodeGroupRequest request) {
         CodeGroup codeGroup = getById(id);
 
+//        codeGroup.getCodes().forEach(code -> codeService.addCodeGroup(code, null));
+//        codeGroup.setCodes(new ArrayList<>());
+//
+//        List<Code> codes = codeService.getCodesByIds(request.getCodeIds());
+//        codes.forEach(code -> codeService.addCodeGroup(code, codeGroup));
+
         codeGroup.setName(request.getName());
+//        codeGroup.setCodes(codes);
         codeGroup.setEditionSignature(new EditionSignature());
         codeGroupRepository.save(codeGroup);
         return codeGroup;

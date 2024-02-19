@@ -33,6 +33,11 @@ public class CodeService {
                 .editionSignature(new EditionSignature())
                 .build();
 
+        if (request.getCodeGroupId() != null) {
+            CodeGroup codeGroup = codeGroupService.getById(request.getCodeGroupId());
+            code.setCodeGroup(codeGroup);
+        }
+
         codeRepository.save(code);
         return code;
     }
@@ -58,6 +63,13 @@ public class CodeService {
     public Code editCode(Integer codeId, CodeRequest request) {
         Code code = getById(codeId);
 
+        if (request.getCodeGroupId() != null) {
+            CodeGroup codeGroup = codeGroupService.getById(request.getCodeGroupId());
+            code.setCodeGroup(codeGroup);
+        } else {
+            code.setCodeGroup(null);
+        }
+
         code.setName(request.getName());
         code.setEditionSignature(new EditionSignature());
         codeRepository.save(code);
@@ -68,6 +80,10 @@ public class CodeService {
         Code code = getById(codeId);
         CodeGroup codeGroup = codeGroupService.getById(codeGroupId);
 
+        return addCodeGroup(code, codeGroup);
+    }
+
+    public Code addCodeGroup(Code code, CodeGroup codeGroup) {
         code.setCodeGroup(codeGroup);
         code.setEditionSignature(new EditionSignature());
         codeRepository.save(code);
