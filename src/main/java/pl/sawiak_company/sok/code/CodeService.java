@@ -96,6 +96,7 @@ public class CodeService {
     }
 
     public void deleteCode(Code code) {
+        code.getQuotations().forEach(quotation -> quotation.setCode(null));
         codeRepository.delete(code);
     }
 }
